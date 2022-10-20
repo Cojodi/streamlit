@@ -57,7 +57,7 @@ frontend: react-build
 
 .PHONY: setup
 setup:
-	pip install pip-tools pipenv ;
+	pip3.9 install pip-tools pipenv ;
 
 .PHONY: pipenv-install
 pipenv-install: pipenv-dev-install py-test-install
@@ -69,9 +69,9 @@ pipenv-dev-install: lib/Pipfile
 	# but we don't actually want to use the lockfile.
 	cd lib; \
 		rm Pipfile.lock; \
-		pipenv install --dev
+		python3.9 -m pipenv install --dev
 
-SHOULD_INSTALL_TENSORFLOW := $(shell python scripts/should_install_tensorflow.py)
+SHOULD_INSTALL_TENSORFLOW := $(shell python3.9 scripts/should_install_tensorflow.py)
 .PHONY: py-test-install
 py-test-install: lib/test-requirements.txt
 	# As of Python 3.9, we're using pip's legacy-resolver when installing
@@ -124,12 +124,12 @@ mypy:
 .PHONY: integration-tests
 # Run all our e2e tests in "bare" mode and check for non-zero exit codes.
 integration-tests:
-	python3 scripts/run_bare_integration_tests.py
+	python3.9 scripts/run_bare_integration_tests.py
 
 .PHONY: cli-smoke-tests
 # Verify that CLI boots as expected when called with `python -m streamlit`
 cli-smoke-tests:
-	python3 scripts/cli_smoke_tests.py
+	python3.9 scripts/cli_smoke_tests.py
 
 .PHONY: cli-regression-tests
 # Verify that CLI boots as expected when called with `python -m streamlit`
@@ -139,20 +139,20 @@ cli-regression-tests: install
 .PHONY: install
 # Install Streamlit into your Python environment.
 install:
-	cd lib ; python setup.py install
+	cd lib ; python3.9 setup.py install
 
 .PHONY: develop
 # Install Streamlit as links in your Python environment, pointing to local workspace.
 develop:
 	cd lib; \
-		pipenv install --skip-lock
+		python3.9 -m pipenv install --skip-lock
 
 .PHONY: distribution
 # Create Python distribution files in dist/.
 distribution:
 	# Get rid of the old build and dist folders to make sure that we clean old js and css.
 	rm -rfv lib/build lib/dist
-	cd lib ; python3 setup.py bdist_wheel --universal sdist
+	cd lib ; python3.9 setup.py bdist_wheel --universal sdist
 
 .PHONY: package
 # Build lib and frontend, and then run 'distribution'.

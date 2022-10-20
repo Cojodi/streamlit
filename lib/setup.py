@@ -21,7 +21,7 @@ from setuptools.command.install import install
 
 THIS_DIRECTORY = Path(__file__).parent
 
-VERSION = "1.13.0"  # PEP-440
+VERSION = "1.14.0"  # PEP-440
 
 NAME = "streamlit"
 
@@ -114,6 +114,7 @@ setuptools.setup(
         "Twitter": "https://twitter.com/streamlit",
     },
     author="Snowflake Inc",
+    authors=["Snowflake Inc"],
     author_email="hello@streamlit.io",
     license="Apache License 2.0",
     classifiers=[
@@ -150,7 +151,7 @@ setuptools.setup(
     # - streamlit version
     # - streamlit hello
     scripts=["bin/streamlit.cmd"],
-    cmdclass={
-        "verify": VerifyVersionCommand,
-    },
+    # cmdclass={
+    #     "verify": VerifyVersionCommand,
+    # },
 )
